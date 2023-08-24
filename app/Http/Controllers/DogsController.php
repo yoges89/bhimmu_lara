@@ -15,7 +15,7 @@ class DogsController extends Controller {
    */
   public function index() {
     return \view('dog.index', [
-        'dogs' => Dog::all()
+      'dogs' => Dog::all(),
     ]);
   }
 
@@ -30,8 +30,14 @@ class DogsController extends Controller {
    * Store a newly created resource in storage.
    */
   public function store(Request $request) {
+    $data = $request->validate([
+      'name' => 'required|max:18',
+      'breed' => 'required|max:18',
+      'height' => 'required|gt:0',
+    ]);
     Dog::create($request->all());
-    return \redirect('/dogs');
+
+    return \to_route('dogs');
   }
 
   /**
